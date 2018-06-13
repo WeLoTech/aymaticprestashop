@@ -221,17 +221,23 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 			global $smarty;
 			$id_product = $this->_psv > 16 ? $params['product']['id'] : $params['product']->id;
 			$data_video = null;
+
+			$statusvideoenabled = false;
+			$status = $this->_getproductVideoStatus($id_product);
+
 			if(!(bool)Configuration::get('dev_mode')){
 				$data_video = $this->_getDataCall($id_product);
+				$statusvideoenabled = (bool)$status['is_enable'];
 			}
 			else{
 				$data_video = $this->_getDefaultData();
+				$statusvideoenabled = true;
 			}
-			
-			$status = $this->_getproductVideoStatus($id_product);
+
+
 			$smarty->assign(array(
 				'is_module_enable' => Configuration::get('videos_visibility'),
-				'status_video' => $status['is_enable'],
+				'status_video' => $statusvideoenabled,
 				'video_url' => $data_video['video_url'],
 				'video_thumbnialurl' => $data_video['video_thumbnialurl'],
 				'product_url' => $data_video['product_url'],
