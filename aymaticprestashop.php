@@ -381,8 +381,8 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 	
 	public function _getDefaultData() {
 		$array_video_data = array('product_url' => 'http://127.0.0.1/prestashop_1.7.3.3/home-accessories/19-customizable-mug.html', 
-		'video_url' => 'https://app.aymatic.com/#/video-embed?uid=4b04d8c87258b35e474994203412f008562646ab47a808aae28541e141c408f6&temp=template2', 
-		'video_thumbnialurl' => 'https://app.aymatic.com/dist/videos/4b04d8c87258b35e474994203412f008562646ab47a808aae28541e141c408f6/ea31b10920f2053ed1584d05fb1d4e90e074e0d610ac104497f7c27fa4eab0bc_640.jpg');
+		'video_url' => 'https://app.aymatic.com/#/video-embed?uid=01737112d13e9b65a41c23e96b4e0f40154c6794400aab71ed4fc833495b9f39&temp=DeveloperMode-1',
+		'video_thumbnialurl' => 'https://app.aymatic.com/dist/videos/01737112d13e9b65a41c23e96b4e0f40154c6794400aab71ed4fc833495b9f39/ec3cb20c29f71c22d2524518b7444095e075e1dc04b014439df8c97aa4edb1_640.jpg');
 		//get api data and send to product page in image section
 		return $array_video_data;
 	}
