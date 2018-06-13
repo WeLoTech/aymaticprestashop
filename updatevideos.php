@@ -27,6 +27,7 @@ if(isset($transferMessage)){
 	//echo $reconstructedMessage;
 	if($reconstructedMessage == null){
 		//echo "Failed hash check: ".$result;
+		http_response_code(403);
 		echo "Integritiy Check failed";
 	}
 	else{
@@ -71,16 +72,17 @@ if(isset($transferMessage)){
 			else{
 				Db::getInstance()->insert($tableName,$entry);
 			}
+			http_response_code(200);
 			echo "OK";
 		}
 		else{
+			http_response_code(403);
 			echo "Failed retrieving values";
 		}
 	}
-
-	
 }
 else{
+	http_response_code(400);
 	echo "Nothing was sent";
 }
 function reconstructProductId($productUrl){
