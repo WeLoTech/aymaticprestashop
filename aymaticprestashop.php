@@ -233,7 +233,10 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 				$data_video = $this->_getDefaultData();
 				$statusvideoenabled = true;
 			}
-
+			//$images = null;
+			//$images = Image::getImages($this->context->language->id, $id_product);
+			//$product = new Product($id_product);
+			//$link = new Link;
 
 			$smarty->assign(array(
 				'is_module_enable' => Configuration::get('videos_visibility'),
@@ -241,7 +244,10 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 				'video_url' => $data_video['video_url'],
 				'video_thumbnialurl' => $data_video['video_thumbnialurl'],
 				'product_url' => $data_video['product_url'],
-				'module_path' => $this->_path,
+				'module_path' => $this->_path//,
+				//'images' => $images,
+				//'product' => $product,
+				//'link' => $this->context->link,
 			));
 
 			if ($this->_psv > 16) {

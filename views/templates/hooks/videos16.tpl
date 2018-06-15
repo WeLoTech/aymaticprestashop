@@ -5,31 +5,29 @@
 </style>
 {/literal}
 {if $status_video && $is_module_enable}
-  <script type="text/javascript">
-  	$('#thumbs_list_frame li:eq(0)').before('<li id="thumb_video"  class="video_link"><a href="{$video_thumbnialurl}" data-video="{$video_url}" class="youtube-video videocenter"><img id="thumb_image" class="img-responsive video-thumb" src="{$video_thumbnialurl}"></a></li>');
+	<script type="text/javascript">
+		$('#thumbs_list_frame li:eq(0)').after('<li id="thumb_video" class="video_link"><a href="{$video_thumbnialurl}" data-video="{$video_url}" class="youtube-video videocenter"><img id="thumb_image" class="img-responsive video-thumb" src="{$video_thumbnialurl}"></a></li>');
 
-$("a.youtube-video").on("click", function(){
-	        $.fancybox({
-	          href: $(this).data("video"),
-	          type: 'iframe'
-	        }); // fancybox
-	        return false   
-	    }); // on
+		$("a.youtube-video").on("click", function(){
+			$.fancybox({
+				href: $(this).data("video"),
+				type: 'iframe'
+			}); // fancybox
+			return false;
+		}); // on
 
-$(document).ready(function(){
-if($('.fancybox').hasClass('shown')){
-		$('.fancybox').removeClass('shown');
-		$('.videocenter').addClass('shown');
-		var $video_image = $("#thumb_image");
-		var src = $video_image.attr("src");
-		$('#bigpic').attr('src',src);
-		//$('.product-cover-modal').attr('src',src);
-		
-	}else{
-		$('.fancybox').addClass('shown');
-		$('.videocenter').removeClass('shown');
-	}
-  	});
-</script>
-
+		$(document).ready(function(){
+			if($('.fancybox').hasClass('shown')){
+				$('.fancybox').removeClass('shown');
+				$('.videocenter').addClass('shown');
+				var $video_image = $("#thumb_image");
+				var src = $video_image.attr("src");
+				$('#bigpic').attr('src',src);
+			}else{
+				$('.fancybox').addClass('shown');
+				$('.videocenter').removeClass('shown');
+			}
+			$('#views_block').removeClass('hidden');
+		});
+	</script>
 {/if}

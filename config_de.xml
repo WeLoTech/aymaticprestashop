@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <module>
-	<name>aymatic</name>
-	<displayName><![CDATA[aymaticprestashop]]></displayName>
-	<version><![CDATA[1.0.0]]></version>
-	<description><![CDATA[aymatic video using API.]]></description>
+	<name>aymaticprestashop</name>
+	<displayName><![CDATA[aymatic Videos]]></displayName>
+	<version><![CDATA[0.1.0]]></version>
+	<description><![CDATA[Product video using API.]]></description>
 	<author><![CDATA[WeLoTech]]></author>
 	<tab><![CDATA[administration]]></tab>
 	<is_configurable>1</is_configurable>
