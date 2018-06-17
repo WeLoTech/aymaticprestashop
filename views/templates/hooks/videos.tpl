@@ -9,7 +9,7 @@
 {/literal}
 {if $status_video && $is_module_enable}
   <script type="text/javascript">
-  	$('.product-images li:eq(0)').before('<li id="thumb_video" class="video_link"><a href="{$video_url}" class="youtube-video videocenter"><img style="width: 100px;height: 100px;" id="thumb_image" class="img-responsive video-thumb thumb" src="{$video_thumbnialurl}"></a></li>');
+  	$('.product-images li:eq(0)').before('<li id="thumb_video_aymatic"  class="aymatic_video_link"><a href="{$video_url}" class="youtube-video videocenter"><img style="width: 100px;height: 100px;" id="thumb_image" class="img-responsive video-thumb thumb" src="{$video_thumbnialurl}"></a></li>');
   	$( 'a.youtube-video' ).fancybox({
 	  type: 'iframe'
 	});

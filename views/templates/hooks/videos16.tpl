@@ -6,7 +6,7 @@
 {/literal}
 {if $status_video && $is_module_enable}
 	<script type="text/javascript">
-		$('#thumbs_list_frame li:eq(0)').after('<li id="thumb_video" class="video_link"><a href="{$video_thumbnialurl}" data-video="{$video_url}" class="youtube-video videocenter"><img id="thumb_image" class="img-responsive video-thumb" src="{$video_thumbnialurl}"></a></li>');
+		$('#thumbs_list_frame li:eq(0)').after('<li id="thumb_video_aymatic"  class="aymatic_video_link"><a href="{$video_thumbnialurl}" data-video="{$video_url}" class="youtube-video videocenter"><img id="thumb_image" class="img-responsive video-thumb" src="{$video_thumbnialurl}"></a></li>');
 
 		$("a.youtube-video").on("click", function(){
 			$.fancybox({
