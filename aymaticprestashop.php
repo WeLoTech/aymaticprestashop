@@ -260,28 +260,33 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 	}
 
 	public function hookactionProductSave($params) {
-		$id_product = $params['id_product'];
-		$status = Tools::getValue('active_video');
-		$this->sendUpdateToServer();
-		//$productvideo = Tools::getValue('submitted_tabs');
-		if ($status != '') {
-			//$this->_sendApiCall($id_product);
-			$this->_updateStatus($id_product, $status, '');
+		//if((bool)Configuration::get('videos_visibility')){
+			$id_product = $params['id_product'];
+			$status = Tools::getValue('active_video');
+			$this->sendUpdateToServer($id_product);
+			//$productvideo = Tools::getValue('submitted_tabs');
+			if ($status != '') {
+				//$this->_sendApiCall($id_product);
+				$this->_updateStatus($id_product, $status, '');
 
-		}
-		//$this->_addnewStatus($params['id_product'], $status);
+			}
+			//$this->_addnewStatus($params['id_product'], $status);
+		//}
 	}
 
 	public function hookactionProductUpdate($params) {
-		$id_product = $params['id_product'];
-		$status = Tools::getValue('active_video');
-		$this->sendUpdateToServer($id_product);
-		//$productvideo = Tools::getValue('submitted_tabs');
-		if ($status != '') {
-			//$this->_sendApiCall($id_product);
-			$this->_updateStatus($id_product, $status, '');
+		//if((bool)Configuration::get('videos_visibility')){
+			$id_product = $params['id_product'];
+			$status = Tools::getValue('active_video');
+			$this->sendUpdateToServer($id_product);
+			//$productvideo = Tools::getValue('submitted_tabs');
+			if ($status != '') {
+				//$this->_sendApiCall($id_product);
+				$this->_updateStatus($id_product, $status, '');
 
-		}
+			}
+			
+		//}
 	}
 
 	public function sendUpdateToServer($id_product) {
@@ -290,25 +295,34 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 		$url = "https://app.aymatic.com/postchanged"; //LIVE
 		$api_key = Tools::getValue('API_KEY');
 
-		$product = new Product($id_product, false, Context::getContext()->language->id);
-		$link = new Link;
-		$p_url = $link->getProductLink($product);
+		try{
+			$product = new Product($id_product, false, Context::getContext()->language->id);
+			$link = new Link;
+			$p_url = $link->getProductLink($product);
 
-		$messagearray =  array('productPageUrl' => $p_url);
-		$messagejson = json_encode($messagearray);
-		//$encryptedmessage = $this->encryptEncode($messagejson,$api_key);
-		//$json = array('message' => $encryptedmessage, 'domain' => $_SERVER['HTTP_HOST']);
-		$json = array('message' => $messagejson, 'domain' => $_SERVER['HTTP_HOST']);
-		$payload = json_encode($json);
+			$messagearray =  array('productPageUrl' => $p_url);
+			$messagejson = json_encode($messagearray);
+			//$encryptedmessage = $this->encryptEncode($messagejson,$api_key);
+			//$json = array('message' => $encryptedmessage, 'domain' => $_SERVER['HTTP_HOST']);
+			$json = array('message' => $messagejson, 'domain' => $_SERVER['HTTP_HOST']);
+			$payload = json_encode($json);
 
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-		curl_setopt($ch,CURLOPT_URL,$url); // such as http://example.com/example.xml
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,2);
-		curl_setopt($ch,CURLOPT_TIMEOUT,10);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
-		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-		curl_exec($ch);
-		curl_close($ch);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+			curl_setopt($ch,CURLOPT_URL,$url); // such as http://example.com/example.xml
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,2);
+			curl_setopt($ch,CURLOPT_TIMEOUT,10);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+			curl_setopt($ch, CURLOPT_FAILONERROR, false);
+			curl_exec($ch);
+			if (curl_error($ch) === false) {
+				$error_msg = curl_error($ch);
+			}
+			curl_close($ch);
+		}
+		catch(Exception $e){
+			$exceptionMessage = $e->getMessage();
+		}
 	}
 	private function encryptEncode($plainText,$password){
 		$encryptedString = $this->encrypt($plainText,$password);
