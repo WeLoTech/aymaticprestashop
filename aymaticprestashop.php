@@ -311,10 +311,10 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 			curl_setopt($ch,CURLOPT_URL,$url); // such as http://example.com/example.xml
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,2);
 			curl_setopt($ch,CURLOPT_TIMEOUT,10);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 			curl_setopt($ch, CURLOPT_FAILONERROR, false);
-			curl_exec($ch);
+			$result = curl_exec($ch);
 			if (curl_error($ch) === false) {
 				$error_msg = curl_error($ch);
 			}
