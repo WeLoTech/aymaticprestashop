@@ -31,16 +31,27 @@ if(isset($transferMessage)){
 		echo "Integritiy Check failed";
 	}
 	else{
-		$tableName = "productvideos";
-
-		$testmode = false;
-		$testproductcount = 8;
-
-		$defaultEnable = true;
-		
 		$jsonObj = json_decode($reconstructedMessage);
 
-		if(isset($jsonObj->{'videoEmbedUrl'}) && isset($jsonObj->{'productPageUrl'}) && isset($jsonObj->{'thumbNailUrl'})){
+		if(isset($jsonObj->{'enableVisibility'})){
+			$enableVideos = (bool)$jsonObj->{'enableVisibility'};
+
+			http_response_code(200);
+			if($enableVideos){
+				Configuration::updateValue('videos_visibility', true);
+				echo "TURNED ON";
+			}
+			else{
+				Configuration::updateValue('videos_visibility', false);
+				echo "TURNED OFF";
+			} 
+		}
+		else if(isset($jsonObj->{'videoEmbedUrl'}) && isset($jsonObj->{'productPageUrl'}) && isset($jsonObj->{'thumbNailUrl'})){
+
+			$tableName = "productvideos";
+			$testmode = false;
+			$testproductcount = 8;
+			$defaultEnable = true;
 
 			//echo 'videoEmbedUrl: ' . $jsonObj->{'videoEmbedUrl'} . "----";
 			//echo 'productPageUrl: ' . $jsonObj->{'productPageUrl'} . "----";
