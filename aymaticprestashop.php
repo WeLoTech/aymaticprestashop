@@ -227,7 +227,9 @@ $this->context->controller->addJS($this->_path . 'js/jquery.fancybox.min.js');
 
 			if(!(bool)Configuration::get('dev_mode')){
 				$data_video = $this->_getDataCall($id_product);
-				$statusvideoenabled = (bool)$status['is_enable'];
+				//if(isset($data_video['video_url']) && isset($data_video['video_thumbnialurl'])){
+					$statusvideoenabled = (bool)$status['is_enable'];
+				//}
 			}
 			else{
 				$data_video = $this->_getDefaultData();

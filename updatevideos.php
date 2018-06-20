@@ -24,6 +24,7 @@ if(isset($transferMessage)){
 	
 	$api_key = Configuration::get('API_KEY');
 	$reconstructedMessage = decodeDecrypt($transferMessage,$api_key);
+	$tableName = "productvideos";
 	//echo $reconstructedMessage;
 	if($reconstructedMessage == null){
 		//echo "Failed hash check: ".$result;
@@ -46,9 +47,39 @@ if(isset($transferMessage)){
 				echo "TURNED OFF";
 			} 
 		}
-		else if(isset($jsonObj->{'videoEmbedUrl'}) && isset($jsonObj->{'productPageUrl'}) && isset($jsonObj->{'thumbNailUrl'})){
+		else if(isset($jsonObj->{'enableSingleVisibility'}) && isset($jsonObj->{'productUrl'})){
+			$enableVideo = (bool)$jsonObj->{'enableSingleVisibility'};
+			$extractedid = (int)reconstructProductId($jsonObj->{'productUrl'});
 
-			$tableName = "productvideos";
+			$entry = array(
+				'id_product' => (int)$extractedid,
+				'is_enable' => (int)$enableVideo,
+				'video_url' => "",
+				'thubmnail_url'=> "",
+				'product_url' => ""
+			);
+
+			$sql = 'SELECT * FROM '._DB_PREFIX_.$tableName.' WHERE id_product = ' . (int)$extractedid;
+			//echo $sql;
+			if ($row = Db::getInstance()->getRow($sql)){
+				$row['is_enable'] = (int)$enableVideo;
+				Db::getInstance()->update($tableName,$row, 'id_product = ' . (int)$extractedid);
+			}
+			else{
+				Db::getInstance()->insert($tableName,$entry);
+			}
+
+			http_response_code(200);
+			if($enableVideo){
+				Configuration::updateValue('videos_visibility', true);
+				echo "TURNED VIDEO ON " . (int)$extractedid;
+			}
+			else{
+				Configuration::updateValue('videos_visibility', false);
+				echo "TURNED VIDEO OFF " . (int)$extractedid;
+			}
+		}
+		else if(isset($jsonObj->{'videoEmbedUrl'}) && isset($jsonObj->{'productPageUrl'}) && isset($jsonObj->{'thumbNailUrl'})){
 			$testmode = false;
 			$testproductcount = 8;
 			$defaultEnable = true;
