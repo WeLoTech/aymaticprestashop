@@ -13,6 +13,7 @@ include(dirname(__FILE__).'/../..//init.php');
 //$jsonString = "{\"videoEmbedUrl\":\"http://localhost:4200/#/video-embed?uid=httpssportgigantatpferdesportuhren26422polarpferdesportpulsuhrequinem400schwarz725882022468html\",\"productPageUrl\":\"https://sportgigant.at/pferdesportuhren/26422-polar-pferdesport-pulsuhr-equine-m400-schwarz-725882022468.html\",\"thumbNailUrl\":\"https://sportgigant.at/52554-thickbox_default/polar-pferdesport-pulsuhr-equine-m400-schwarz.jpg\"}";
 //$postMessage = encryptEncode($jsonString,$encryptpassword);
 //$_POST['message'] = $postMessage;
+$version = 0.80;
 
 $transferMessage = $_POST['message'];
 if(isset($transferMessage)){
@@ -34,7 +35,11 @@ if(isset($transferMessage)){
 	else{
 		$jsonObj = json_decode($reconstructedMessage);
 
-		if(isset($jsonObj->{'enableVisibility'})){
+		if(isset($jsonObj->{'reqestVideoStats'})){
+			http_response_code(200);
+			echo "STATS";
+		}
+		else if(isset($jsonObj->{'enableVisibility'})){
 			$enableVideos = (bool)$jsonObj->{'enableVisibility'};
 
 			http_response_code(200);
@@ -125,7 +130,7 @@ if(isset($transferMessage)){
 }
 else{
 	http_response_code(400);
-	echo "Nothing was sent";
+	echo "Nothing was sent - Version: " . $version;
 }
 function reconstructProductId($productUrl){
 	$urlParts = explode( '/', $productUrl);
