@@ -14,7 +14,7 @@
 }
 .videocenter:after {
     display:table-cell;
-    background: url('images/baseline-play_circle_outline-24px.svg') no-repeat scroll center center transparent;
+    background: none;
     position: absolute;
     font-size: 26px;
     text-align: center;
@@ -35,4 +35,21 @@
 }
 #videothumb a {
 height:100%;
+}
+
+#thumb_image {
+    opacity:0.5
+}
+
+#aymatic_play_icon_small {
+    background:none;
+    position:absolute;
+    top:15%;
+    right:15%;
+    width:70%;
+    height:70%
+}
+
+.hoveredplay {
+    opacity:0.5
 }
