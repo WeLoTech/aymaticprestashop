@@ -13,7 +13,7 @@ include(dirname(__FILE__).'/../..//init.php');
 //$jsonString = "{\"videoEmbedUrl\":\"http://localhost:4200/#/video-embed?uid=httpssportgigantatpferdesportuhren26422polarpferdesportpulsuhrequinem400schwarz725882022468html\",\"productPageUrl\":\"https://sportgigant.at/pferdesportuhren/26422-polar-pferdesport-pulsuhr-equine-m400-schwarz-725882022468.html\",\"thumbNailUrl\":\"https://sportgigant.at/52554-thickbox_default/polar-pferdesport-pulsuhr-equine-m400-schwarz.jpg\"}";
 //$postMessage = encryptEncode($jsonString,$encryptpassword);
 //$_POST['message'] = $postMessage;
-$version = 0.80;
+$version = 0.90;
 
 $transferMessage = $_POST['message'];
 if(isset($transferMessage)){
@@ -36,8 +36,26 @@ if(isset($transferMessage)){
 		$jsonObj = json_decode($reconstructedMessage);
 
 		if(isset($jsonObj->{'reqestVideoStats'})){
+
+			$fullCnt = 0;
+			$enabledCnt = 0;
+			$setVideoUrls = 0;
+
+			$statsql = 'SELECT * FROM '._DB_PREFIX_.$tableName;
+			if ($results = Db::getInstance()->ExecuteS($statsql)){
+				foreach ($results as $row){
+					$fullCnt++;
+					if(((int)$row['is_enable'] == 1)){
+						$enabledCnt++;
+					}
+					if(isset($row['video_url'])){
+						$setVideoUrls++;
+					}
+				}
+			}
+				
 			http_response_code(200);
-			echo "STATS";
+			echo "STATS: fullCnt - " . $fullCnt . " / enabledCnt - " . $enabledCnt . " / setVideoUrls - ". $setVideoUrls;
 		}
 		else if(isset($jsonObj->{'enableVisibility'})){
 			$enableVideos = (bool)$jsonObj->{'enableVisibility'};
